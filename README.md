@@ -1,4 +1,4 @@
-# React Strip Checkout Component
+# React Stripe Checkout Component
 Stripe's Checkout makes it almost too easy to take people's money.
 This should make it even easier if you're building a react
 application.
