@@ -18,10 +18,13 @@
     "loaded",
     "easy"
   ],
-  "author": "azmenak",
+  "author": "Adam Zmenak <adam.zmenak@gmail.com> (http://azmenak.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/azmenak/react-stripe-checkout/issues"
   },
-  "homepage": "https://github.com/azmenak/react-stripe-checkout"
+  "homepage": "https://github.com/azmenak/react-stripe-checkout",
+  "dependencies": {
+    "react-script-loader": "0.0.1"
+  }
 }
