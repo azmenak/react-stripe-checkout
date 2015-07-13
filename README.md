@@ -3,6 +3,10 @@ Stripe's Checkout makes it almost too easy to take people's money.
 This should make it even easier if you're building a react
 application.
 
+Get started by installing with npm
+
+    npm install react-stripe-checkout
+
 `token` and `stripeKey` are the only *required* props,
 everything else is options as per the stripe docs. See [Checkout
 Docs](https://stripe.com/docs/checkout#integration-custom). All props
