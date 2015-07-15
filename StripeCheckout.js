@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var { ReactScriptLoaderMixin } = require('react-script-loader');
+var ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
 
 var ReactStripeCheckout = React.createClass({
 
