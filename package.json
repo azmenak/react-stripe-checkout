@@ -2,9 +2,10 @@
   "name": "react-stripe-checkout",
   "version": "1.0.2",
   "description": "Easily inject checkout.js as a react component. Will load the script on demand and supports all the options from stripe docs.",
-  "main": "StripeCheckout.js",
+  "main": "./dist/react-stripe-checkout.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "make": "babel StripeCheckout.jsx > ./dist/react-stripe-checkout.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
   "homepage": "https://github.com/azmenak/react-stripe-checkout",
   "dependencies": {
     "react-script-loader": "0.0.1"
+  },
+  "devDependencies": {
+    "babel": "^5.6.23"
   }
 }
