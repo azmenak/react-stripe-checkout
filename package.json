@@ -29,6 +29,7 @@
     "react-script-loader": "0.0.1"
   },
   "devDependencies": {
-    "babel": "^5.6.23"
+    "babel": "^5.6.23",
+    "stylus": "^0.51.1"
   }
 }
