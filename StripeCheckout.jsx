@@ -9,7 +9,8 @@ var ReactStripeCheckout = React.createClass({
 
   getDefaultProps: function() {
     return {
-      className: 'StripeCheckout'
+      className: 'StripeCheckout',
+      label: 'Pay With Card'
     };
   },
 
@@ -189,7 +190,7 @@ var ReactStripeCheckout = React.createClass({
   renderStripeButton: function() {
     return (
       <button className="stripe-checkout-button" onClick={this.onClick}>
-        <span className="inner-text">{this.props.label || 'Pay With Card'}</span>
+        <span className="inner-text">{this.props.label}</span>
       </button>
     );
   },

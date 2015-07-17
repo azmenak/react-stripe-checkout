@@ -12,7 +12,8 @@ var ReactStripeCheckout = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      className: 'StripeCheckout'
+      className: 'StripeCheckout',
+      label: 'Pay With Card'
     };
   },
 
@@ -177,7 +178,7 @@ var ReactStripeCheckout = React.createClass({
       React.createElement(
         'span',
         { className: 'inner-text' },
-        this.props.label || 'Pay With Card'
+        this.props.label
       )
     );
   },
@@ -192,4 +193,3 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
-
