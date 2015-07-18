@@ -129,19 +129,27 @@ var ReactStripeCheckout = React.createClass({
     // Initialize the Stripe handler on the first onScriptLoaded call.
     // This handler is shared by all StripeButtons on the page.
     if (!ReactStripeCheckout.stripeHandler) {
-      this.config.key = this.props.stripeKey;
-      var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
-      for (var i = 0; i < options.length; i++) {
-        var key = options[i];
-        if (key in this.props) {
-          this.config[key] = this.props[key];
-        }
-      }
-      ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.config);
-      if (this.hasPendingClick) {
-        this.showStripeDialog();
+      this.updateStripeHandler();
+    }
+  },
+
+  updateStripeHandler: function updateStripeHandler() {
+    this.config.key = this.props.stripeKey;
+    var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
+    for (var i = 0; i < options.length; i++) {
+      var key = options[i];
+      if (key in this.props) {
+        this.config[key] = this.props[key];
       }
     }
+    ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.config);
+    if (this.hasPendingClick) {
+      this.showStripeDialog();
+    }
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    this.updateStripeHandler();
   },
 
   showLoadingDialog: function showLoadingDialog() {
@@ -193,3 +201,4 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
+
