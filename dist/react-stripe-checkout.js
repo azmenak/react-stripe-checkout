@@ -134,15 +134,7 @@ var ReactStripeCheckout = React.createClass({
   },
 
   updateStripeHandler: function updateStripeHandler() {
-    this.config.key = this.props.stripeKey;
-    var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
-    for (var i = 0; i < options.length; i++) {
-      var key = options[i];
-      if (key in this.props) {
-        this.config[key] = this.props[key];
-      }
-    }
-    ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.config);
+    ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.getConfig());
     if (this.hasPendingClick) {
       this.showStripeDialog();
     }
@@ -159,9 +151,22 @@ var ReactStripeCheckout = React.createClass({
     this.props.hideLoadingDialog && this.props.hideLoadingDialog.apply(this, arguments);
   },
 
+  getConfig: function getConfig() {
+    var config = {};
+    config.key = this.props.stripeKey;
+    var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
+    for (var i = 0; i < options.length; i++) {
+      var key = options[i];
+      if (key in this.props) {
+        config[key] = this.props[key];
+      }
+    }
+    return config;
+  },
+
   showStripeDialog: function showStripeDialog() {
     this.hideLoadingDialog();
-    ReactStripeCheckout.stripeHandler.open(this.config);
+    ReactStripeCheckout.stripeHandler.open(this.getConfig());
   },
   onScriptError: function onScriptError() {
     this.hideLoadingDialog();
@@ -182,10 +187,10 @@ var ReactStripeCheckout = React.createClass({
   renderStripeButton: function renderStripeButton() {
     return React.createElement(
       'button',
-      { className: 'stripe-checkout-button', onClick: this.onClick },
+      { className: "stripe-checkout-button", onClick: this.onClick },
       React.createElement(
         'span',
-        { className: 'inner-text' },
+        { className: "inner-text" },
         this.props.label
       )
     );
