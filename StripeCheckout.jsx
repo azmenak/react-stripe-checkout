@@ -133,7 +133,6 @@ var ReactStripeCheckout = React.createClass({
   },
 
   hasPendingClick: false,
-  config: {},
 
   onScriptLoaded: function() {
     // Initialize the Stripe handler on the first onScriptLoaded call.
