@@ -115,7 +115,7 @@ var ReactStripeCheckout = React.createClass({
     closed: React.PropTypes.func
   },
 
-  getInitalState: function() {
+  getInitialState: function() {
     return {
       scriptLoading: true,
       scriptLoadError: false
@@ -135,6 +135,7 @@ var ReactStripeCheckout = React.createClass({
   hasPendingClick: false,
 
   onScriptLoaded: function() {
+    this.setState({scriptLoading: false});
     // Initialize the Stripe handler on the first onScriptLoaded call.
     // This handler is shared by all StripeButtons on the page.
     if (!ReactStripeCheckout.stripeHandler) {
@@ -150,7 +151,8 @@ var ReactStripeCheckout = React.createClass({
   },
 
   componentDidUpdate: function () {
-    this.updateStripeHandler();
+    if (!this.state.scriptLoading)
+      this.updateStripeHandler();
   },
 
   showLoadingDialog: function() {
