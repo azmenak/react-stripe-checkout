@@ -105,7 +105,7 @@ var ReactStripeCheckout = React.createClass({
     closed: React.PropTypes.func
   },
 
-  getInitalState: function getInitalState() {
+  getInitialState: function getInitialState() {
     return {
       scriptLoading: true,
       scriptLoadError: false
@@ -125,6 +125,7 @@ var ReactStripeCheckout = React.createClass({
   hasPendingClick: false,
 
   onScriptLoaded: function onScriptLoaded() {
+    this.setState({ scriptLoading: false });
     // Initialize the Stripe handler on the first onScriptLoaded call.
     // This handler is shared by all StripeButtons on the page.
     if (!ReactStripeCheckout.stripeHandler) {
@@ -140,7 +141,7 @@ var ReactStripeCheckout = React.createClass({
   },
 
   componentDidUpdate: function componentDidUpdate() {
-    this.updateStripeHandler();
+    if (!this.state.scriptLoading) this.updateStripeHandler();
   },
 
   showLoadingDialog: function showLoadingDialog() {
@@ -186,10 +187,10 @@ var ReactStripeCheckout = React.createClass({
   renderStripeButton: function renderStripeButton() {
     return React.createElement(
       'button',
-      { className: "stripe-checkout-button", onClick: this.onClick },
+      { className: 'stripe-checkout-button', onClick: this.onClick },
       React.createElement(
         'span',
-        { className: "inner-text" },
+        { className: 'inner-text' },
         this.props.label
       )
     );
@@ -205,4 +206,3 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
-
