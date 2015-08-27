@@ -47,6 +47,8 @@ var TakeMoney = React.createClass({
   amount={1000000}
   currency="USD"
   stripeKey="..."
+  locale="de"
+  email="heinz@customer.de"
   token={this.onToken}>
   <button className="myOwnButton">
     <span>Use your own child component, which gets wrapped in a
