@@ -13,7 +13,8 @@ var ReactStripeCheckout = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
       className: 'StripeCheckout',
-      label: 'Pay With Card'
+      label: 'Pay With Card',
+      locale: 'en'
     };
   },
 
@@ -89,6 +90,9 @@ var ReactStripeCheckout = React.createClass({
     // false). The default is false.
     email: React.PropTypes.string,
 
+    // Specify the locale. The default is 'en'.
+    locale: React.PropTypes.string,
+
     // Specify whether to include the option to "Remember Me" for future
     // purchases (true or false). The default is true.
     allowRememberMe: React.PropTypes.bool,
@@ -154,7 +158,7 @@ var ReactStripeCheckout = React.createClass({
   getConfig: function getConfig() {
     var config = {};
     config.key = this.props.stripeKey;
-    var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
+    var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'locale', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
     for (var i = 0; i < options.length; i++) {
       var key = options[i];
       if (key in this.props) {
@@ -206,3 +210,4 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
+
