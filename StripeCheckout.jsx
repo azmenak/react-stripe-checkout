@@ -66,6 +66,23 @@ var ReactStripeCheckout = React.createClass({
     // have to explicitly include it when you create a charge using the API.
     amount: React.PropTypes.number,
 
+    // Specify auto to display Checkout in the user's preferred language, if
+    // available. English will be used by default.
+    //
+    // https://support.stripe.com/questions/what-languages-does-stripe-checkout-support
+    // for more info.
+    locale: React.PropTypes.oneOf([
+      'auto', // (Default) Automatically chosen by checkout
+      'zh', //Chinese
+      'nl', //Dutch
+      'en', //English
+      'fr', //French
+      'de', //German
+      'it', //Italian
+      'jp', //Japanease
+      'es'  //Spanish
+    ]),
+
     // ==============
     // Optional Props
     // ==============
@@ -99,9 +116,6 @@ var ReactStripeCheckout = React.createClass({
     // Specify whether Checkout should validate the billing ZIP code (true or
     // false). The default is false.
     email: React.PropTypes.string,
-
-    // Specify the locale. The default is 'en'.
-    locale: React.PropTypes.string,
 
     // Specify whether to include the option to "Remember Me" for future
     // purchases (true or false). The default is true.
