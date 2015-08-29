@@ -5,8 +5,9 @@
   "main": "./dist/react-stripe-checkout.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "make": "babel StripeCheckout.jsx > ./dist/react-stripe-checkout.js",
-    "watch": "babel StripeCheckout.jsx --watch --out-file ./dist/react-stripe-checkout.js"
+    "watch": "babel StripeCheckout.jsx --watch --out-file ./dist/react-stripe-checkout.js",
+    "build": "babel StripeCheckout.jsx > ./dist/react-stripe-checkout.js",
+    "version": "npm run build && git add -A dist"
   },
   "repository": {
     "type": "git",
