@@ -124,6 +124,14 @@ var ReactStripeCheckout = React.createClass({
     // Specify whether to accept Bitcoin in Checkout. The default is false.
     bitcoin: React.PropTypes.bool,
 
+    // Specify whether to accept Alipay ('auto', true, or false). The default
+    // is false.
+    alipay: React.PropTypes.oneOf(['auto', true, false]),
+
+    // Specify if you need reusable access to the customer's Alipay account
+    // (true or false). The default is false.
+    alipayReusable: React.PropTypes.bool,
+
     // function() The callback to invoke when Checkout is opened (not supported
     // in IE6 and IE7).
     opened: React.PropTypes.func,
@@ -185,7 +193,11 @@ var ReactStripeCheckout = React.createClass({
   getConfig: function getConfig() {
     var config = {};
     config.key = this.props.stripeKey;
-    var options = ['token', 'image', 'name', 'description', 'amount', 'currency', 'closed', 'panelLabel', 'zipCode', 'locale', 'email', 'allowRememberMe', 'bitcoin', 'opened'];
+    var options = [
+      'token', 'image', 'name', 'description', 'amount', 'locale',
+      'currency', 'panelLabel', 'zipCode', 'email', 'allowRememberMe',
+      'bitcoin', 'alipay', 'alipayReusable', 'opened', 'closed'
+    ];
     for (var i = 0; i < options.length; i++) {
       var key = options[i];
       if (key in this.props) {
