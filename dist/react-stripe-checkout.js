@@ -231,3 +231,4 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
+
