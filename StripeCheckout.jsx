@@ -148,9 +148,11 @@ var ReactStripeCheckout = React.createClass({
   },
 
   updateStripeHandler: function () {
-    ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.getConfig());
-    if (this.hasPendingClick) {
-      this.showStripeDialog();
+    if (StripeCheckout) {
+      ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.getConfig());
+      if (this.hasPendingClick) {
+        this.showStripeDialog();
+      }
     }
   },
 
