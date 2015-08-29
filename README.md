@@ -24,7 +24,7 @@ var TakeMoney = React.createClass({
   },
 
   ...
-  
+
   render: function() {
     return (
         ...
@@ -61,5 +61,6 @@ span</span>
 This was probably terribly written, I'll look at any PR coming my way.
 
 ### Contributors
-- [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after intantiation
-- [@ekalvi](https://github.com/ekalvi) added multiple checkout buttons per page 
+- [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after instantiation and fixed a loading error
+- [@ekalvi](https://github.com/ekalvi) added multiple checkout buttons per page
+- [@jstaffans](https://github.com/jstaffans) adding support for locale
