@@ -7,7 +7,8 @@ Get started by installing with npm
 
     npm install react-stripe-checkout
 
-Requires babel for compiling.
+Requires babel for compiling. If anyone is having issues with that,
+open an issue and I'll do my best to better document the build process.
 
 `token` and `stripeKey` are the only *required* props,
 everything else is options as per the stripe docs. See [Checkout
