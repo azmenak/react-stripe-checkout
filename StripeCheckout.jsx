@@ -11,7 +11,7 @@ var ReactStripeCheckout = React.createClass({
     return {
       className: 'StripeCheckout',
       label: 'Pay With Card',
-      locale: 'en'
+      locale: 'auto'
     };
   },
 
