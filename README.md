@@ -52,8 +52,17 @@ var TakeMoney = React.createClass({
   currency="USD"
   stripeKey="..."
   locale="zh"
+  email={foo@bar.com}
+  // Note: Enabling either address option will give the user the ability to
+  // fill out both.
+  shippingAddress={false}
+  billingAddress={false}
+  // Note: enabling both zipCode checks and billing or shipping address can have
+  // unintended consequences.
+  zipCode={false}
   alipay={true}
   bitcoin={true}
+  allowRememberme={true}
   token={this.onToken}>
   <button className="myOwnButton">
     <span>Use your own child component, which gets wrapped in a
