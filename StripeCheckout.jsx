@@ -11,7 +11,8 @@ var ReactStripeCheckout = React.createClass({
     return {
       className: 'StripeCheckout',
       label: 'Pay With Card',
-      locale: 'auto'
+      locale: 'auto',
+      componentClass: 'span'
     };
   },
 
@@ -20,6 +21,9 @@ var ReactStripeCheckout = React.createClass({
     // (Requires including stripe-checkout.css or adding the .styl file
     // to your pipeline)
     label: React.PropTypes.string,
+
+    // Named component to wrap button (eg. div)
+    componentClass: React.PropTypes.string,
 
     // Show a loading indicator
     showLoadingDialog: React.PropTypes.func,
@@ -246,11 +250,12 @@ var ReactStripeCheckout = React.createClass({
   },
 
   render: function () {
+    var ComponentClass = this.props.componentClass;
     return (
       !this.props.children ? this.renderStripeButton() : (
-        <span {...this.props} onClick={this.onClick}>
+        <ComponentClass {...this.props} onClick={this.onClick}>
           {this.props.children}
-        </span>
+        </ComponentClass>
       )
     );
   }
