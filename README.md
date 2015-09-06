@@ -14,7 +14,7 @@ open an issue and I'll do my best to better document the build process.
 everything else is options as per the stripe docs. See [Checkout
 Docs](https://stripe.com/docs/checkout#integration-custom). All props
 go through simple validation and are passed to stripe checkout, they're
-also document in `StripeCheckout.jsx`.
+also documented in `StripeCheckout.jsx`.
 
 ```javascript
 var react = require('react'),
@@ -47,12 +47,13 @@ var TakeMoney = React.createClass({
   name="Three Comma Co."
   description="Big Data Stuff"
   image="http://nancyfriedman.typepad.com/.a/6a00d8341c4f9453ef01a3fd095a0b970b-pi"
+  componentClass="div"
   panelLabel="Give Money"
   amount={1000000}
   currency="USD"
   stripeKey="..."
   locale="zh"
-  email={foo@bar.com}
+  email="foo@bar.com"
   // Note: Enabling either address option will give the user the ability to
   // fill out both. Addresses are sent as a second parameter in the token callback.
   shippingAddress={false}
@@ -65,8 +66,8 @@ var TakeMoney = React.createClass({
   allowRememberme={true}
   token={this.onToken}>
   <button className="myOwnButton">
-    <span>Use your own child component, which gets wrapped in a
-span</span>
+    Use your own child component, which gets wrapped in whatever
+    component you pass into as "componentClass" (defaults to span)
   </button>
 </StripeCheckout>
 ```
@@ -78,3 +79,4 @@ This was probably terribly written, I'll look at any PR coming my way.
 - [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after instantiation and fixed a loading error
 - [@ekalvi](https://github.com/ekalvi) added multiple checkout buttons per page
 - [@jstaffans](https://github.com/jstaffans) adding support for locale
+- [@gabestein](https://github.com/gabestein) added billing and shipping options
