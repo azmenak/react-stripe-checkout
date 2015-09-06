@@ -54,7 +54,7 @@ var TakeMoney = React.createClass({
   locale="zh"
   email={foo@bar.com}
   // Note: Enabling either address option will give the user the ability to
-  // fill out both.
+  // fill out both. Addresses are sent as a second parameter in the token callback.
   shippingAddress={false}
   billingAddress={false}
   // Note: enabling both zipCode checks and billing or shipping address can have
