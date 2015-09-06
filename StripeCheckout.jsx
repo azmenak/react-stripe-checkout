@@ -113,6 +113,14 @@ var ReactStripeCheckout = React.createClass({
     // false)
     zipCode: React.PropTypes.bool,
 
+    // Specify whether Checkout should collect the user's billing address
+    // (true or false). The default is false.
+    billingAddress: React.PropTypes.bool,
+
+    // Specify whether Checkout should collect the user's shipping address
+    // (true or false). The default is false.
+    shippingAddress: React.PropTypes.bool,
+
     // Specify whether Checkout should validate the billing ZIP code (true or
     // false). The default is false.
     email: React.PropTypes.string,
@@ -195,8 +203,9 @@ var ReactStripeCheckout = React.createClass({
     config.key = this.props.stripeKey;
     var options = [
       'token', 'image', 'name', 'description', 'amount', 'locale',
-      'currency', 'panelLabel', 'zipCode', 'email', 'allowRememberMe',
-      'bitcoin', 'alipay', 'alipayReusable', 'opened', 'closed'
+      'currency', 'panelLabel', 'zipCode', 'shippingAddress',
+      'billingAddress', 'email', 'allowRememberMe', 'bitcoin',
+      'alipay', 'alipayReusable', 'opened', 'closed'
     ];
     for (var i = 0; i < options.length; i++) {
       var key = options[i];
@@ -248,4 +257,3 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
-
