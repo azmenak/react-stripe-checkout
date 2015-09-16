@@ -63,7 +63,7 @@ var TakeMoney = React.createClass({
   zipCode={false}
   alipay={true}
   bitcoin={true}
-  allowRememberme={true}
+  allowRememberMe={true}
   token={this.onToken}>
   <button className="myOwnButton">
     Use your own child component, which gets wrapped in whatever
