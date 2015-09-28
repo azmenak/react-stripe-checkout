@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/react-stripe-checkout.svg)](http://badge.fury.io/js/react-stripe-checkout)
+[![Dependencies Status](https://david-dm.org/azmenak/react-stripe-checkout.svg?style=flat-square)](https://david-dm.org/react-stripe-checkout)
+
 # React Stripe Checkout Component
 Stripe's Checkout makes it almost too easy to take people's money.
 This should make it even easier if you're building a react
