@@ -49,14 +49,14 @@ var TakeMoney = React.createClass({
 <StripeCheckout
   name="Three Comma Co."
   description="Big Data Stuff"
-  image="http://nancyfriedman.typepad.com/.a/6a00d8341c4f9453ef01a3fd095a0b970b-pi"
+  image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
   componentClass="div"
   panelLabel="Give Money"
   amount={1000000}
   currency="USD"
   stripeKey="..."
   locale="zh"
-  email="foo@bar.com"
+  email="info@vidhub.co"
   // Note: Enabling either address option will give the user the ability to
   // fill out both. Addresses are sent as a second parameter in the token callback.
   shippingAddress={false}
