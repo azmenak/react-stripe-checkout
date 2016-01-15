@@ -177,8 +177,17 @@ var ReactStripeCheckout = React.createClass({
     }
   },
 
-  componentDidUpdate: function componentDidUpdate() {
-    if (!this.state.scriptLoading) this.updateStripeHandler();
+  componentDidUpdate: function componentDidUpdate(prevProps) {
+    if (!this.state.scriptLoading && this.stripeHandlerMustUpdate(prevProps)) this.updateStripeHandler();
+  },
+
+  stripeHandlerMustUpdate: function stripeHandlerMustUpdate(prevProps) {
+    var handlerProps = ['key', 'token', 'image', 'locale'];
+    for (var i = 0; i < handlerProps.length; i++) {
+      var prop = handlerProps[i];
+      if (prevProps[prop] !== this.props[prop]) return true;
+    }
+    return false;
   },
 
   showLoadingDialog: function showLoadingDialog() {
@@ -244,4 +253,3 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
-
