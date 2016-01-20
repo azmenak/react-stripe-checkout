@@ -234,6 +234,9 @@ var ReactStripeCheckout = React.createClass({
   },
 
   render: function render() {
+    if (this.props.showModal) {
+      this.onClick();
+    }
     var ComponentClass = this.props.componentClass;
     return !this.props.children ? this.renderStripeButton() : React.createElement(
       ComponentClass,
