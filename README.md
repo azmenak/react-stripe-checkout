@@ -67,7 +67,12 @@ var TakeMoney = React.createClass({
   alipay={true}
   bitcoin={true}
   allowRememberMe={true}
-  token={this.onToken}>
+  token={this.onToken}
+  // Note: `reconfigureOnUpdate` should be set to true IFF if you do not change
+  // the core stripe config (stripeKey, image, ...) on subsequent components. It can
+  // improve performance if you have a lot of buttons that tie to the same account.
+  reconfigureOnUpdate={false}
+  >
   <button className="myOwnButton">
     Use your own child component, which gets wrapped in whatever
     component you pass into as "componentClass" (defaults to span)

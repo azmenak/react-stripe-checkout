@@ -37,6 +37,13 @@ var ReactStripeCheckout = React.createClass({
     // connection is offline when attemting to load the script.
     onScriptError: React.PropTypes.func,
 
+    // By default, any time the React component is updated, it will call
+    // StripeCheckout.configure, which may result in additional XHR calls to the
+    // stripe API.  If you know the first configuration is all you need, you
+    // can set this to false.  Subsequent updates will affect the StripeCheckout.open
+    // (e.g. different prices)
+    reconfigureOnUpdate: React.PropTypes.bool,
+
     // =====================================================
     // Required by stripe
     // see Stripe docs for more info:
@@ -171,14 +178,24 @@ var ReactStripeCheckout = React.createClass({
   },
 
   updateStripeHandler: function updateStripeHandler() {
-    ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.getConfig());
+    if (!ReactStripeCheckout.stripeHandler || !!this.props.reconfigureOnUpdate) {
+      ReactStripeCheckout.stripeHandler = StripeCheckout.configure(this.getConfig());
+    }
     if (this.hasPendingClick) {
       this.showStripeDialog();
     }
   },
 
   componentDidUpdate: function componentDidUpdate() {
-    if (!this.state.scriptLoading) this.updateStripeHandler();
+    if (!this.state.scriptLoading) {
+      this.updateStripeHandler();
+    }
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    if (ReactStripeCheckout.stripeHandler) {
+      ReactStripeCheckout.stripeHandler.close();
+    }
   },
 
   showLoadingDialog: function showLoadingDialog() {
