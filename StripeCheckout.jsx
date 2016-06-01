@@ -259,17 +259,23 @@ var ReactStripeCheckout = React.createClass({
 
   renderStripeButton: function() {
     return (
-      <button className="stripe-checkout-button" onClick={this.onClick}>
+      <button className="stripe-checkout-button" ref={this.bindNativeOnClick}>
         <span className="inner-text">{this.props.label}</span>
       </button>
     );
+  },
+    
+  bindNativeOnClick: function(element) {
+    if (element !== null) {
+      element.onclick = this.onClick;
+    }
   },
 
   render: function () {
     var ComponentClass = this.props.componentClass;
     return (
       !this.props.children ? this.renderStripeButton() : (
-        <ComponentClass {...this.props} onClick={this.onClick}>
+        <ComponentClass {...this.props} ref={this.bindNativeOnClick}>
           {this.props.children}
         </ComponentClass>
       )
