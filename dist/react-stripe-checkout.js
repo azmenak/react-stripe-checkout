@@ -241,7 +241,7 @@ var ReactStripeCheckout = React.createClass({
   renderStripeButton: function renderStripeButton() {
     return React.createElement(
       'button',
-      { className: 'stripe-checkout-button', onClick: this.onClick },
+      { className: 'stripe-checkout-button', ref: this.bindNativeOnClick },
       React.createElement(
         'span',
         { className: 'inner-text' },
@@ -250,11 +250,17 @@ var ReactStripeCheckout = React.createClass({
     );
   },
 
+  bindNativeOnClick: function bindNativeOnClick(element) {
+    if (element !== null) {
+      element.onclick = this.onClick;
+    }
+  },
+
   render: function render() {
     var ComponentClass = this.props.componentClass;
     return !this.props.children ? this.renderStripeButton() : React.createElement(
       ComponentClass,
-      _extends({}, this.props, { onClick: this.onClick }),
+      _extends({}, this.props, { ref: this.bindNativeOnClick }),
       this.props.children
     );
   }
