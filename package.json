@@ -72,7 +72,9 @@
         {
           "ignore": [
             "dispatch",
-            "children"
+            "children",
+            "className",
+            "style"
           ]
         }
       ]

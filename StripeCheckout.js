@@ -32,6 +32,11 @@ export default class ReactStripeCheckout extends React.Component {
     // to your pipeline)
     label: React.PropTypes.string,
 
+    // Custom styling for default button
+    style: React.PropTypes.object,
+    // Custom styling for <span> tag inside default button
+    textStyle: React.PropTypes.object,
+
     // Named component to wrap button (eg. div)
     ComponentClass: React.PropTypes.string,
 
@@ -360,6 +365,7 @@ export default class ReactStripeCheckout extends React.Component {
         {...{
           [this.props.triggerEvent]: this.onClick,
         }}
+        className={this.props.className}
         onMouseDown={this.handleOnMouseDown}
         onFocus={this.handleOnMouseDown}
         onMouseUp={this.handleOnMouseUp}
@@ -378,11 +384,12 @@ export default class ReactStripeCheckout extends React.Component {
           visibility: 'visible',
         }, this.state.buttonActive && {
           background: '#005d93',
-        })}
+        }, this.props.style)}
       >
         <span
           style={Object.assign({}, {
             backgroundImage: 'linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4)',
+            fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
             fontSize: 14,
             position: 'relative',
             padding: '0 12px',
@@ -392,12 +399,13 @@ export default class ReactStripeCheckout extends React.Component {
             color: '#fff',
             fontWeight: 'bold',
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25)',
+            textShadow: '0 -1px 0 rgba(0,0,0,0.25)',
             borderRadius: 4,
           }, this.state.buttonActive && {
             color: '#eee',
             boxShadow: 'inset 0 1px 0 rgba(0,0,0,0.1)',
             backgroundImage: 'linear-gradient(#008cdd,#008cdd 85%,#239adf)',
-          })}
+          }, this.props.textStyle)}
         >
           {this.props.label}
         </span>
