@@ -146,7 +146,15 @@ var ReactStripeCheckout = React.createClass({
 
     // function() The callback to invoke when Checkout is closed (not supported
     // in IE6 and IE7).
-    closed: React.PropTypes.func
+    closed: React.PropTypes.func,
+
+    // Specify if there is custom validation logic that needs to happen before
+    // opening the stripe dialog
+    hasCustomForm: React.PropTypes.bool,
+
+    // Specify if the custom validation has succeeded or not before opening
+    // the stripe dialog
+    customFormValidated: React.PropTypes.bool,
   },
 
   getInitialState: function getInitialState() {
@@ -230,11 +238,25 @@ var ReactStripeCheckout = React.createClass({
   onClick: function onClick() {
     if (ReactStripeCheckout.scriptDidError) {
       console.log('failed to load script');
-    } else if (ReactStripeCheckout.stripeHandler) {
-      this.showStripeDialog();
+      return;
+    }
+
+    if (this.props.hasCustomForm) {
+      if (this.props.customFormValidated) {
+        if (ReactStripeCheckout.stripeHandler) {
+          this.showStripeDialog();
+        } else {
+          this.showLoadingDialog();
+          this.hasPendingClick = true;
+        }
+      }
     } else {
-      this.showLoadingDialog();
-      this.hasPendingClick = true;
+      if (ReactStripeCheckout.stripeHandler) {
+        this.showStripeDialog();
+      } else {
+        this.showLoadingDialog();
+        this.hasPendingClick = true;
+      }
     }
   },
 
@@ -261,4 +283,3 @@ var ReactStripeCheckout = React.createClass({
 });
 
 module.exports = ReactStripeCheckout;
-
