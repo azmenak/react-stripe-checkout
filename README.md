@@ -68,14 +68,14 @@ export default class TakeMoney extends React.Component {
   email="info@vidhub.co"
   // Note: Enabling either address option will give the user the ability to
   // fill out both. Addresses are sent as a second parameter in the token callback.
-  shippingAddress={false}
+  shippingAddress
   billingAddress={false}
-  // Note: enabling both zipCode checks and billing or shipping address can have
-  // unintended consequences.
+  // Note: enabling both zipCode checks and billing or shipping address will
+  // cause zipCheck to be pulled from billing address (set to shipping if none provided).
   zipCode={false}
-  alipay={true}
-  bitcoin={true}
-  allowRememberMe={true}
+  alipay
+  bitcoin
+  allowRememberMe
   token={this.onToken}
   // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
   // you are using multiple stripe keys
