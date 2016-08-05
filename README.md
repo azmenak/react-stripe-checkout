@@ -16,6 +16,10 @@ Get started by installing with npm
 Requires babel for compiling. If anyone is having issues with that,
 open an issue and I'll do my best to better document the build process.
 
+#### Changes in version 2.0
+
+There used to be a seperate `.styl` file and respective `.css` output. These have been removed and are now written directly in js.
+
 ### Requirements
 
 `token` and `stripeKey` are the only *required* props,
@@ -24,7 +28,7 @@ Docs](https://stripe.com/docs/checkout#integration-custom). All props
 go through simple validation and are passed to stripe checkout, they're
 also documented in `StripeCheckout.js`.
 
-```javascript
+```jsx
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 
@@ -52,9 +56,13 @@ export default class TakeMoney extends React.Component {
 }
 ```
 
+This will give you a default *Stripe-style* button which looks like this:
+
+![stripe checkout button](https://www.dropbox.com/s/tuwlslyrxubgc49/Screenshot%202016-08-05%2011.53.37.png?dl=1)
+
 ### Send all the props!
 
-```javascript
+```jsx
 <StripeCheckout
   name="Three Comma Co."
   description="Big Data Stuff"
