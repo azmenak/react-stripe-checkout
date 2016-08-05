@@ -7,6 +7,8 @@ Stripe's Checkout makes it almost too easy to take people's money.
 This should make it even easier if you're building a react
 application.
 
+### Installation
+
 Get started by installing with npm
 
     npm install react-stripe-checkout
@@ -14,34 +16,40 @@ Get started by installing with npm
 Requires babel for compiling. If anyone is having issues with that,
 open an issue and I'll do my best to better document the build process.
 
+### Requirements
+
 `token` and `stripeKey` are the only *required* props,
 everything else is options as per the stripe docs. See [Checkout
 Docs](https://stripe.com/docs/checkout#integration-custom). All props
 go through simple validation and are passed to stripe checkout, they're
-also documented in `StripeCheckout.jsx`.
+also documented in `StripeCheckout.js`.
 
 ```javascript
-var react = require('react'),
-    StripeCheckout = require('react-stripe-checkout');
+import React from 'react'
+import StripeCheckout from 'react-stripe-checkout';
 
-var TakeMoney = React.createClass({
-  onToken: function(token) {
-    xhrStripeTokenToMyServer(token).then( => {
-      // please do with HTTPS
+export default class TakeMoney extends React.Component {
+  onToken = (token) => {
+    fetch('/save-stripe-token', {
+      method: 'POST',
+      body: JSON.stringify(token),
+    }).then(token => {
+      alert(`We are in business, ${token.email}`);
     });
-  },
+  }
 
-  ...
+  // ...
 
-  render: function() {
+  render() {
     return (
-        ...
-        <StripeCheckout
-          token={this.onToken}
-          stripeKey="my_PUBLISHABLE_stripekey" />
+      // ...
+      <StripeCheckout
+        token={this.onToken}
+        stripeKey="my_PUBLISHABLE_stripekey"
+      />
     )
   }
-})
+}
 ```
 
 ### Send all the props!
@@ -51,7 +59,7 @@ var TakeMoney = React.createClass({
   name="Three Comma Co."
   description="Big Data Stuff"
   image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
-  componentClass="div"
+  ComponentClass="div"
   panelLabel="Give Money"
   amount={1000000}
   currency="USD"
@@ -69,14 +77,16 @@ var TakeMoney = React.createClass({
   bitcoin={true}
   allowRememberMe={true}
   token={this.onToken}
-  // Note: `reconfigureOnUpdate` should be set to true IFF if you do not change
-  // the core stripe config (stripeKey, image, ...) on subsequent components. It can
-  // improve performance if you have a lot of buttons that tie to the same account.
+  // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
+  // you are using multiple stripe keys
   reconfigureOnUpdate={false}
+  // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
+  // useful if you're using React-Tap-Event-Plugin
+  triggerEvent="onTouchTap"
   >
-  <button className="myOwnButton">
+  <button className="btn btn-primary">
     Use your own child component, which gets wrapped in whatever
-    component you pass into as "componentClass" (defaults to span)
+    component you pass into as "ComponentClass" (defaults to span)
   </button>
 </StripeCheckout>
 ```
