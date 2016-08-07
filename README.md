@@ -107,3 +107,4 @@ This was probably terribly written, I'll look at any PR coming my way.
 - [@ekalvi](https://github.com/ekalvi) added multiple checkout buttons per page
 - [@jstaffans](https://github.com/jstaffans) adding support for locale
 - [@gabestein](https://github.com/gabestein) added billing and shipping options
+- [@samcorcos](https://github.com/samcorcos) added testing
