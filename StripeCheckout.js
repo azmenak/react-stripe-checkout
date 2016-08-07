@@ -37,6 +37,10 @@ export default class ReactStripeCheckout extends React.Component {
     // Custom styling for <span> tag inside default button
     textStyle: React.PropTypes.object,
 
+    // Prevents any events from opening the popup
+    // Adds the disabled prop to the button and adjusts the styling as well
+    disabled: React.PropTypes.bool,
+
     // Named component to wrap button (eg. div)
     ComponentClass: React.PropTypes.string,
 
@@ -335,6 +339,10 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   onClick = () => { // eslint-disable-line react/sort-comp
+    if (this.props.disabled) {
+      return;
+    }
+
     if (scriptDidError) {
       try {
         throw new Error('Tried to call onClick, but StripeCheckout failed to load');
@@ -382,6 +390,7 @@ export default class ReactStripeCheckout extends React.Component {
           boxShadow: '0 1px 0 rgba(0,0,0,0.2)',
           cursor: 'pointer',
           visibility: 'visible',
+          userSelect: 'none',
         }, this.state.buttonActive && {
           background: '#005d93',
         }, this.props.style)}
@@ -413,6 +422,43 @@ export default class ReactStripeCheckout extends React.Component {
     );
   }
 
+  renderDisabledButton() {
+    return (
+      <button
+        disabled
+        style={{
+          background: 'rgba(0,0,0,0.2)',
+          overflow: 'hidden',
+          display: 'inline-block',
+          border: 0,
+          padding: 1,
+          textDecoration: 'none',
+          borderRadius: 5,
+          userSelect: 'none',
+        }}
+      >
+        <span
+          style={{
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25)',
+            fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
+            fontSize: 14,
+            position: 'relative',
+            padding: '0 12px',
+            display: 'block',
+            height: 30,
+            lineHeight: '30px',
+            borderRadius: 4,
+            color: '#999',
+            background: '#f8f9fa',
+            textShadow: '0 1px 0 rgba(255,255,255,0.5)',
+          }}
+        >
+          {this.props.label}
+        </span>
+      </button>
+    );
+  }
+
   render() {
     if (this.props.desktopShowModal === true && !this.state.open) {
       this.onClick();
@@ -431,6 +477,8 @@ export default class ReactStripeCheckout extends React.Component {
         />
       );
     }
-    return this.renderDefaultStripeButton();
+    return this.props.disabled
+      ? this.renderDisabledButton()
+      : this.renderDefaultStripeButton();
   }
 }
