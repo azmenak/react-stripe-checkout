@@ -4,7 +4,8 @@
   "description": "Easily inject checkout.js as a react component. Will load the script on demand and supports all the options from stripe docs.",
   "main": "./dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require babel-register --require .test-setup.js -R spec ./spec.js",
+    "cover": "nyc -x './spec.js' -n 'StripeCheckout.js' -r text -r html -r lcov npm test",
     "watch": "./node_modules/.bin/babel StripeCheckout.js --out-file ./dist/main.js --source-maps inline --watch",
     "build": "./node_modules/.bin/babel StripeCheckout.js --out-file ./dist/main.js",
     "version": "npm run build"
@@ -106,11 +107,18 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.11.6",
+    "enzyme": "^2.4.1",
     "eslint": "^2.10.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
-    "react": "^15.3.0"
+    "expect": "^1.20.2",
+    "jsdom": "^9.4.1",
+    "mocha": "^3.0.1",
+    "nyc": "^7.1.0",
+    "react": "^15.3.0",
+    "react-addons-test-utils": "^15.3.0"
   }
 }
