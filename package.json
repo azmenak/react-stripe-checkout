@@ -1,6 +1,6 @@
 {
   "name": "react-stripe-checkout",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Easily inject checkout.js as a react component. Will load the script on demand and supports all the options from stripe docs.",
   "main": "./dist/main.js",
   "scripts": {
