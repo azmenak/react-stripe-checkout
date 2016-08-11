@@ -250,14 +250,16 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   componentWillUnmount() {
-    this.loadPromise.cancel();
+    if (this.loadPromise) {
+      this.loadPromise.cancel();
+    }
     if (ReactStripeCheckout.stripeHandler && this.state.open) {
       ReactStripeCheckout.stripeHandler.open({ closed: null });
       ReactStripeCheckout.stripeHandler.close();
     }
   }
 
-  onScriptLoaded() {
+  onScriptLoaded = () => {
     if (!ReactStripeCheckout.stripeHandler) {
       ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
         key: this.props.stripeKey,
@@ -268,7 +270,7 @@ export default class ReactStripeCheckout extends React.Component {
     }
   }
 
-  onScriptError(...args) {
+  onScriptError = (...args) => {
     this.hideLoadingDialog();
     if (this.props.onScriptError) {
       this.props.onScriptError.apply(this, args);
@@ -306,7 +308,7 @@ export default class ReactStripeCheckout extends React.Component {
     'bitcoin',
     'alipay',
     'alipayReusable',
-  ].reduce((config, key) => Object.assign({}, config, {
+  ].reduce((config, key) => Object.assign({}, config, this.props[key] && {
     [key]: this.props[key],
   }), {
     opened: this.onOpened,
