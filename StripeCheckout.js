@@ -308,7 +308,7 @@ export default class ReactStripeCheckout extends React.Component {
     'bitcoin',
     'alipay',
     'alipayReusable',
-  ].reduce((config, key) => Object.assign({}, config, this.props[key] && {
+  ].reduce((config, key) => Object.assign({}, config, this.props.hasOwnProperty(key) && {
     [key]: this.props[key],
   }), {
     opened: this.onOpened,
