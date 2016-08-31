@@ -15,6 +15,9 @@
       "es2015",
       "react",
       "stage-0"
+    ],
+    "plugins": [
+      "transform-object-assign"
     ]
   },
   "eslintConfig": {
@@ -107,6 +110,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-register": "^6.11.6",
     "enzyme": "^2.4.1",
     "eslint": "^2.10.1",
