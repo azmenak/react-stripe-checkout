@@ -18,7 +18,7 @@ open an issue and I'll do my best to better document the build process.
 
 #### Changes in version 2.0
 
-There used to be a seperate `.styl` file and respective `.css` output. These have been removed and are now written directly in js.
+There used to be a separate `.styl` file and respective `.css` output. These have been removed and are now written directly in js.
 
 ### Requirements
 
