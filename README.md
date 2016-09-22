@@ -37,8 +37,10 @@ export default class TakeMoney extends React.Component {
     fetch('/save-stripe-token', {
       method: 'POST',
       body: JSON.stringify(token),
-    }).then(token => {
-      alert(`We are in business, ${token.email}`);
+    }).then(response => {
+      response.json().then(data => {
+        alert(`We are in business, ${data.email});
+      });
     });
   }
 
