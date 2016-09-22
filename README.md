@@ -39,7 +39,7 @@ export default class TakeMoney extends React.Component {
       body: JSON.stringify(token),
     }).then(response => {
       response.json().then(data => {
-        alert(`We are in business, ${data.email});
+        alert(`We are in business, ${data.email}`);
       });
     });
   }
