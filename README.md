@@ -23,7 +23,7 @@ There used to be a separate `.styl` file and respective `.css` output. These hav
 ### Requirements
 
 `token` and `stripeKey` are the only *required* props,
-everything else is options as per the stripe docs. See [Checkout
+everything else is optional as per the stripe docs. See [Checkout
 Docs](https://stripe.com/docs/checkout#integration-custom). All props
 go through simple validation and are passed to stripe checkout, they're
 also documented in `StripeCheckout.js`.
