@@ -48,7 +48,7 @@ export default class ReactStripeCheckout extends React.Component {
     showLoadingDialog: React.PropTypes.func,
     // Hide the loading indicator
     hideLoadingDialog: React.PropTypes.func,
-
+    
     // Run this method when the scrupt fails to load. Will run if the internet
     // connection is offline when attemting to load the script.
     onScriptError: React.PropTypes.func,
@@ -72,7 +72,12 @@ export default class ReactStripeCheckout extends React.Component {
     // Your publishable key (test or live).
     // can't use "key" as a prop in react, so have to change the keyname
     stripeKey: React.PropTypes.string.isRequired,
-
+    
+    // Run this method when you want some behaviour before opening stripe
+    // checkout. If this method returns false, it will prevent the checkout
+    // from opening.
+    onClick: React.PropTypes.func,
+    
     // The callback to invoke when the Checkout process is complete.
     //   function(token)
     //     token is the token object created.
@@ -341,6 +346,10 @@ export default class ReactStripeCheckout extends React.Component {
 
   onClick = () => { // eslint-disable-line react/sort-comp
     if (this.props.disabled) {
+      return;
+    }
+    
+    if (this.props.onClick && !this.props.onClick()) {
       return;
     }
 
