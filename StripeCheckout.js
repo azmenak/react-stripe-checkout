@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 let scriptLoading = false;
 let scriptLoaded = false;
@@ -19,9 +20,9 @@ export default class ReactStripeCheckout extends React.Component {
     // WARNING: does not work on mobile due to browser security restrictions
     // NOTE: Must be set to false when receiving token to prevent modal from
     //       opening automatically after closing
-    desktopShowModal: React.PropTypes.bool,
+    desktopShowModal: PropTypes.bool,
 
-    triggerEvent: React.PropTypes.oneOf([
+    triggerEvent: PropTypes.oneOf([
       'onClick',
       'onTouchTap',
       'onTouchStart',
@@ -30,38 +31,38 @@ export default class ReactStripeCheckout extends React.Component {
     // If included, will render the default blue button with label text.
     // (Requires including stripe-checkout.css or adding the .styl file
     // to your pipeline)
-    label: React.PropTypes.string,
+    label: PropTypes.string,
 
     // Custom styling for default button
-    style: React.PropTypes.object,
+    style: PropTypes.object,
     // Custom styling for <span> tag inside default button
-    textStyle: React.PropTypes.object,
+    textStyle: PropTypes.object,
 
     // Prevents any events from opening the popup
     // Adds the disabled prop to the button and adjusts the styling as well
-    disabled: React.PropTypes.bool,
+    disabled: PropTypes.bool,
 
     // Named component to wrap button (eg. div)
-    ComponentClass: React.PropTypes.string,
+    ComponentClass: PropTypes.string,
 
     // Show a loading indicator
-    showLoadingDialog: React.PropTypes.func,
+    showLoadingDialog: PropTypes.func,
     // Hide the loading indicator
-    hideLoadingDialog: React.PropTypes.func,
+    hideLoadingDialog: PropTypes.func,
 
     // Run this method when the scrupt fails to load. Will run if the internet
     // connection is offline when attemting to load the script.
-    onScriptError: React.PropTypes.func,
+    onScriptError: PropTypes.func,
 
     // Runs when the script tag is created, but before it is added to the DOM
-    onScriptTagCreated: React.PropTypes.func,
+    onScriptTagCreated: PropTypes.func,
 
     // By default, any time the React component is updated, it will call
     // StripeCheckout.configure, which may result in additional XHR calls to the
     // stripe API.  If you know the first configuration is all you need, you
     // can set this to false.  Subsequent updates will affect the StripeCheckout.open
     // (e.g. different prices)
-    reconfigureOnUpdate: React.PropTypes.bool,
+    reconfigureOnUpdate: PropTypes.bool,
 
     // =====================================================
     // Required by stripe
@@ -71,40 +72,40 @@ export default class ReactStripeCheckout extends React.Component {
 
     // Your publishable key (test or live).
     // can't use "key" as a prop in react, so have to change the keyname
-    stripeKey: React.PropTypes.string.isRequired,
+    stripeKey: PropTypes.string.isRequired,
 
     // The callback to invoke when the Checkout process is complete.
     //   function(token)
     //     token is the token object created.
     //     token.id can be used to create a charge or customer.
     //     token.email contains the email address entered by the user.
-    token: React.PropTypes.func.isRequired,
+    token: PropTypes.func.isRequired,
 
     // ==========================
     // Highly Recommended Options
     // ==========================
 
     // Name of the company or website.
-    name: React.PropTypes.string,
+    name: PropTypes.string,
 
     // A description of the product or service being purchased.
-    description: React.PropTypes.string,
+    description: PropTypes.string,
 
     // A relative URL pointing to a square image of your brand or product. The
     // recommended minimum size is 128x128px. The recommended image types are
     // .gif, .jpeg, and .png.
-    image: React.PropTypes.string,
+    image: PropTypes.string,
 
     // The amount (in cents) that's shown to the user. Note that you will still
     // have to explicitly include it when you create a charge using the API.
-    amount: React.PropTypes.number,
+    amount: PropTypes.number,
 
     // Specify auto to display Checkout in the user's preferred language, if
     // available. English will be used by default.
     //
     // https://support.stripe.com/questions/what-languages-does-stripe-checkout-support
     // for more info.
-    locale: React.PropTypes.oneOf([
+    locale: PropTypes.oneOf([
       'auto', // (Default) Automatically chosen by checkout
       'zh', // Chinese
       'nl', // Dutch
@@ -121,7 +122,7 @@ export default class ReactStripeCheckout extends React.Component {
     // ==============
 
     // The currency of the amount (3-letter ISO code). The default is USD.
-    currency: React.PropTypes.oneOf([
+    currency: PropTypes.oneOf([
       'AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN','BAM','BBD', // eslint-disable-line comma-spacing
       'BDT','BGN','BIF','BMD','BND','BOB','BRL','BSD','BWP','BZD','CAD','CDF', // eslint-disable-line comma-spacing
       'CHF','CLP','CNY','COP','CRC','CVE','CZK','DJF','DKK','DOP','DZD','EEK', // eslint-disable-line comma-spacing
@@ -140,46 +141,46 @@ export default class ReactStripeCheckout extends React.Component {
     // “Pay {{amount}}”, etc.). If you include {{amount}}, it will be replaced
     // by the provided amount. Otherwise, the amount will be appended to the
     // end of your label.
-    panelLabel: React.PropTypes.string,
+    panelLabel: PropTypes.string,
 
     // Specify whether Checkout should validate the billing ZIP code (true or
     // false)
-    zipCode: React.PropTypes.bool,
+    zipCode: PropTypes.bool,
 
     // Specify whether Checkout should collect the user's billing address
     // (true or false). The default is false.
-    billingAddress: React.PropTypes.bool,
+    billingAddress: PropTypes.bool,
 
     // Specify whether Checkout should collect the user's shipping address
     // (true or false). The default is false.
-    shippingAddress: React.PropTypes.bool,
+    shippingAddress: PropTypes.bool,
 
     // Specify whether Checkout should validate the billing ZIP code (true or
     // false). The default is false.
-    email: React.PropTypes.string,
+    email: PropTypes.string,
 
     // Specify whether to include the option to "Remember Me" for future
     // purchases (true or false). The default is true.
-    allowRememberMe: React.PropTypes.bool,
+    allowRememberMe: PropTypes.bool,
 
     // Specify whether to accept Bitcoin in Checkout. The default is false.
-    bitcoin: React.PropTypes.bool,
+    bitcoin: PropTypes.bool,
 
     // Specify whether to accept Alipay ('auto', true, or false). The default
     // is false.
-    alipay: React.PropTypes.oneOf(['auto', true, false]),
+    alipay: PropTypes.oneOf(['auto', true, false]),
 
     // Specify if you need reusable access to the customer's Alipay account
     // (true or false). The default is false.
-    alipayReusable: React.PropTypes.bool,
+    alipayReusable: PropTypes.bool,
 
     // function() The callback to invoke when Checkout is opened (not supported
     // in IE6 and IE7).
-    opened: React.PropTypes.func,
+    opened: PropTypes.func,
 
     // function() The callback to invoke when Checkout is closed (not supported
     // in IE6 and IE7).
-    closed: React.PropTypes.func,
+    closed: PropTypes.func,
   }
 
   constructor(props) {
