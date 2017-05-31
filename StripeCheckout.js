@@ -103,18 +103,21 @@ export default class ReactStripeCheckout extends React.Component {
     // Specify auto to display Checkout in the user's preferred language, if
     // available. English will be used by default.
     //
-    // https://support.stripe.com/questions/what-languages-does-stripe-checkout-support
+    // https://stripe.com/docs/checkout#supported-languages
     // for more info.
     locale: PropTypes.oneOf([
       'auto', // (Default) Automatically chosen by checkout
-      'zh', // Chinese
+      'zh', // Simplified Chinese
+      'da', // Danish
       'nl', // Dutch
       'en', // English
       'fr', // French
       'de', // German
       'it', // Italian
-      'jp', // Japanease
+      'ja', // Japanease
+      'no', // Norwegian
       'es', // Spanish
+      'sv', // Swedish
     ]),
 
     // ==============
