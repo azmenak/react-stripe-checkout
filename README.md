@@ -66,12 +66,12 @@ This will give you a default *Stripe-style* button which looks like this:
 
 ```jsx
 <StripeCheckout
-  name="Three Comma Co."
-  description="Big Data Stuff"
-  image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
+  name="Three Comma Co." // the pop-in header title
+  description="Big Data Stuff" // the pop-in header subtitle
+  image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png" // the pop-in header image (default none)
   ComponentClass="div"
-  panelLabel="Give Money"
-  amount={1000000}
+  panelLabel="Give Money" // prepended to the amount in the bottom pay button
+  amount={1000000} // cents
   currency="USD"
   stripeKey="..."
   locale="zh"
@@ -83,10 +83,12 @@ This will give you a default *Stripe-style* button which looks like this:
   // Note: enabling both zipCode checks and billing or shipping address will
   // cause zipCheck to be pulled from billing address (set to shipping if none provided).
   zipCode={false}
-  alipay
-  bitcoin
-  allowRememberMe
-  token={this.onToken}
+  alipay // accept Alipay (default false)
+  bitcoin // accept Bitcoins (default false)
+  allowRememberMe // "Remember Me" option (default true)
+  token={this.onToken} // submit callback
+  opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
+  closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
   // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
   // you are using multiple stripe keys
   reconfigureOnUpdate={false}
