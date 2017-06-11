@@ -59,5 +59,6 @@ declare module "react-stripe-checkout" {
         triggerEvent?: "onTouchTap" | "onClick" | "onTouchStart";
     }
 
+    import React = require("react");
     export default class StripeCheckout extends React.Component<StripeCheckoutProps, void> {}
 }
