@@ -106,6 +106,10 @@ This will give you a default *Stripe-style* button which looks like this:
 ### Other info
 This was probably terribly written, I'll look at any PR coming my way.
 
+### Resources 
+
+* [Accept Stripe Payments with React and Express](https://www.robinwieruch.de/react-express-stripe-payment/)
+
 ### Contributors
 - [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after instantiation and fixed a loading error
 - [@ekalvi](https://github.com/ekalvi) added multiple checkout buttons per page
