@@ -3,6 +3,7 @@
   "version": "2.4.0",
   "description": "Easily inject checkout.js as a react component. Will load the script on demand and supports all the options from stripe docs.",
   "main": "./dist/main.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "mocha --require babel-register --require .test-setup.js -R spec ./spec.js",
     "cover": "nyc -x './spec.js' -n 'StripeCheckout.js' -r text -r html -r lcov npm test",
