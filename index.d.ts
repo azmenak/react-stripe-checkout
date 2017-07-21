@@ -60,5 +60,5 @@ declare module "react-stripe-checkout" {
     }
 
     import React = require("react");
-    export default class StripeCheckout extends React.Component<StripeCheckoutProps, void> {}
+    export default class StripeCheckout extends React.Component<StripeCheckoutProps, Object> {}
 }
