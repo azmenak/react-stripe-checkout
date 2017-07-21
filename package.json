@@ -7,8 +7,8 @@
   "scripts": {
     "test": "mocha --require babel-register --require .test-setup.js -R spec ./spec.js",
     "cover": "nyc -x './spec.js' -n 'StripeCheckout.js' -r text -r html -r lcov npm test",
-    "watch": "mkdir dist -p; ./node_modules/.bin/babel StripeCheckout.js --out-file ./dist/main.js --source-maps inline --watch",
-    "build": "mkdir dist -p; ./node_modules/.bin/babel StripeCheckout.js --out-file ./dist/main.js",
+    "watch": "mkdir -p  dist; ./node_modules/.bin/babel StripeCheckout.js --out-file ./dist/main.js --source-maps inline --watch",
+    "build": "mkdir -p dist; ./node_modules/.bin/babel StripeCheckout.js --out-file ./dist/main.js",
     "version": "npm run build"
   },
   "babel": {
