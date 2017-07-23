@@ -186,7 +186,7 @@ export default class ReactStripeCheckout extends React.Component {
     closed: PropTypes.func,
   }
 
-  static isMounted = false;
+  static _isMounted = false;
 
   constructor(props) {
     super(props);
@@ -197,7 +197,7 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   componentDidMount() {
-    this.isMounted = true;
+    this._isMounted = true;
     if (scriptLoaded) {
       return;
     }
@@ -257,7 +257,7 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   componentWillUnmount() {
-    this.isMounted = false;
+    this._isMounted = false;
     if (this.loadPromise) {
       this.loadPromise.cancel();
     }
@@ -285,7 +285,7 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   onClosed = (...args) => {
-    if (this.isMounted)
+    if (this._isMounted)
       this.setState({ open: false });
     if (this.props.closed) {
       this.props.closed.apply(this, args);
