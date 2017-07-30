@@ -39,7 +39,7 @@ declare module "react-stripe-checkout" {
     export interface StripeCheckoutProps {
         token: (token: Token) => void;
         stripeKey: string;
-        label: string;
+        label?: string;
         name?: string;
         ComponentClass?: string;
         description?: string;
