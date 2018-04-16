@@ -24,7 +24,6 @@ const props = {
   alipay: false,
   bitcoin: false,
   allowRememberMe: false,
-  reconfigureOnUpdate: false,
   triggerEvent: 'onClick',
   className: 'StripeCheckout'
 }

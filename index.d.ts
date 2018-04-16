@@ -55,7 +55,6 @@ declare module "react-stripe-checkout" {
         alipay?: boolean
         bitcoin?: boolean
         allowRememberMe?: boolean
-        reconfigureOnUpdate?: boolean
         triggerEvent?: "onTouchTap" | "onClick" | "onTouchStart"
     }
 
