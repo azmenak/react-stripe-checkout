@@ -345,7 +345,9 @@ export default class ReactStripeCheckout extends React.Component {
 
   showStripeDialog() {
     this.hideLoadingDialog();
-    ReactStripeCheckout.stripeHandler.open(this.getConfig());
+    fetch("/").then(() => {
+      ReactStripeCheckout.stripeHandler.open(this.getConfig());
+    });
   }
 
   onClick = () => { // eslint-disable-line react/sort-comp
