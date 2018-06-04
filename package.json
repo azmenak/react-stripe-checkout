@@ -103,6 +103,12 @@
     "url": "https://github.com/azmenak/react-stripe-checkout/issues"
   },
   "homepage": "https://github.com/azmenak/react-stripe-checkout",
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
+  "peerDependencies": {
+    "react": ">=15"
+  },
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
@@ -124,7 +130,6 @@
     "jsdom": "^9.4.1",
     "mocha": "^3.0.1",
     "nyc": "^7.1.0",
-    "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.0",
     "react-dom": "15.5.4"
