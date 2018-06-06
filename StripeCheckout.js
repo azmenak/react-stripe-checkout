@@ -191,8 +191,7 @@ export default class ReactStripeCheckout extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     if (scriptLoaded) {
-      this.updateStripeHandler();
-      return;
+      return this.updateStripeHandler();
     }
 
     if (scriptLoading) {
