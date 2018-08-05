@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 let scriptLoading = false;
 let scriptLoaded = false;
 let scriptDidError = false;
+const stripeHandlers = {};
 
 export default class ReactStripeCheckout extends React.Component {
   static defaultProps = {
@@ -189,7 +190,7 @@ export default class ReactStripeCheckout extends React.Component {
   componentDidMount() {
     this.mounted = true;
     if (scriptLoaded) {
-      this.updateStripeHandler();
+      this.getStripeHandler();
     } else if (!scriptLoading) {
       scriptLoading = true;
 
@@ -238,7 +239,7 @@ export default class ReactStripeCheckout extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!scriptLoading && this.props.stripeKey !== prevProps.stripeKey) {
-      this.updateStripeHandler();
+      this.getStripeHandler();
     }
   }
 
@@ -247,15 +248,13 @@ export default class ReactStripeCheckout extends React.Component {
     if (this.loadPromise) {
       this.loadPromise.cancel();
     }
-    if (ReactStripeCheckout.stripeHandler && this.state.open) {
-      ReactStripeCheckout.stripeHandler.close();
+    if (this.state.open && this.hasStripeHandler()) {
+      this.getStripeHandler().close();
     }
   }
 
   onScriptLoaded = () => {
-    ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
-      key: this.props.stripeKey,
-    });
+    this.getStripeHandler();
     if (this.hasPendingClick) {
       this.showStripeDialog();
     }
@@ -308,10 +307,24 @@ export default class ReactStripeCheckout extends React.Component {
     closed: this.onClosed,
   });
 
-  updateStripeHandler() {
-    ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
-      key: this.props.stripeKey,
-    });
+  getStripeHandler() {
+    const { stripeKey } = this.props;
+    if (!stripeKey || typeof StripeCheckout === 'undefined') return null;
+    let handler = stripeHandlers[stripeKey];
+    if (!handler) {
+      handler = StripeCheckout.configure({ key: stripeKey });
+      stripeHandlers[stripeKey] = handler;
+    }
+    return handler;
+  }
+
+  hasStripeHandler() {
+    const { stripeKey } = this.props;
+    return (
+      stripeKey &&
+      typeof StripeCheckout !== 'undefined' &&
+      stripeHandlers.hasOwnProperty(stripeKey)
+    );
   }
 
   showLoadingDialog(...args) {
@@ -328,7 +341,7 @@ export default class ReactStripeCheckout extends React.Component {
 
   showStripeDialog() {
     this.hideLoadingDialog();
-    ReactStripeCheckout.stripeHandler.open(this.getConfig());
+    this.getStripeHandler().open(this.getConfig());
   }
 
   onClick = () => { // eslint-disable-line react/sort-comp
@@ -340,7 +353,7 @@ export default class ReactStripeCheckout extends React.Component {
       try {
         throw new Error('Tried to call onClick, but StripeCheckout failed to load');
       } catch (x) {} // eslint-disable-line no-empty
-    } else if (ReactStripeCheckout.stripeHandler) {
+    } else if (this.hasStripeHandler()) {
       this.showStripeDialog();
     } else {
       this.showLoadingDialog();
@@ -456,7 +469,7 @@ export default class ReactStripeCheckout extends React.Component {
     if (this.props.desktopShowModal === true && !this.state.open) {
       this.onClick();
     } else if (this.props.desktopShowModal === false && this.state.open) {
-      ReactStripeCheckout.stripeHandler.close();
+      this.getStripeHandler().close();
     }
 
     const { ComponentClass } = this.props;
