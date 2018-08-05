@@ -178,8 +178,6 @@ export default class ReactStripeCheckout extends React.Component {
     closed: PropTypes.func,
   }
 
-  static _isMounted = false;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -189,57 +187,53 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this.mounted = true;
     if (scriptLoaded) {
-      return this.updateStripeHandler();
-    }
+      this.updateStripeHandler();
+    } else if (!scriptLoading) {
+      scriptLoading = true;
 
-    if (scriptLoading) {
-      return;
-    }
+      const script = document.createElement('script');
+      if (typeof this.props.onScriptTagCreated === 'function') {
+        this.props.onScriptTagCreated(script);
+      }
 
-    scriptLoading = true;
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.async = 1;
 
-    const script = document.createElement('script');
-    if (typeof this.props.onScriptTagCreated === 'function') {
-      this.props.onScriptTagCreated(script);
-    }
+      this.loadPromise = (() => {
+        let canceled = false;
+        const promise = new Promise((resolve, reject) => {
+          script.onload = () => {
+            scriptLoaded = true;
+            scriptLoading = false;
+            resolve();
+            this.onScriptLoaded();
+          };
+          script.onerror = (event) => {
+            scriptDidError = true;
+            scriptLoading = false;
+            reject(event);
+            this.onScriptError(event);
+          };
+        });
+        const wrappedPromise = new Promise((accept, cancel) => {
+          promise.then(() => canceled ? cancel({ isCanceled: true }) : accept()); // eslint-disable-line no-confusing-arrow
+          promise.catch(error => canceled ? cancel({ isCanceled: true }) : cancel(error)); // eslint-disable-line no-confusing-arrow
+        });
 
-    script.src = 'https://checkout.stripe.com/checkout.js';
-    script.async = 1;
-
-    this.loadPromise = (() => {
-      let canceled = false;
-      const promise = new Promise((resolve, reject) => {
-        script.onload = () => {
-          scriptLoaded = true;
-          scriptLoading = false;
-          resolve();
-          this.onScriptLoaded();
+        return {
+          promise: wrappedPromise,
+          cancel() { canceled = true; },
         };
-        script.onerror = (event) => {
-          scriptDidError = true;
-          scriptLoading = false;
-          reject(event);
-          this.onScriptError(event);
-        };
-      });
-      const wrappedPromise = new Promise((accept, cancel) => {
-        promise.then(() => canceled ? cancel({ isCanceled: true }) : accept()); // eslint-disable-line no-confusing-arrow
-        promise.catch(error => canceled ? cancel({ isCanceled: true }) : cancel(error)); // eslint-disable-line no-confusing-arrow
-      });
+      })();
 
-      return {
-        promise: wrappedPromise,
-        cancel() { canceled = true; },
-      };
-    })();
+      this.loadPromise.promise
+        .then(this.onScriptLoaded)
+        .catch(this.onScriptError);
 
-    this.loadPromise.promise
-      .then(this.onScriptLoaded)
-      .catch(this.onScriptError);
-
-    document.body.appendChild(script);
+      document.body.appendChild(script);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -249,7 +243,7 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.mounted = false;
     if (this.loadPromise) {
       this.loadPromise.cancel();
     }
@@ -275,8 +269,9 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   onClosed = (...args) => {
-    if (this._isMounted)
+    if (this.mounted) {
       this.setState({ open: false });
+    }
     if (this.props.closed) {
       this.props.closed.apply(this, args);
     }
