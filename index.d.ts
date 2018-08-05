@@ -36,8 +36,24 @@ declare module "react-stripe-checkout" {
         used: boolean
     }
 
+    export interface Address {
+        billing_address_city: string;
+        billing_address_country: string;
+        billing_address_country_code: string;
+        billing_address_line1: string;
+        billing_address_zip: string;
+        billing_name: string;
+        shipping_address_city?: string;
+        shipping_address_country?: string;
+        shipping_address_country_code?: string;
+        shipping_address_line1?: string;
+        shipping_address_zip?: string;
+        shipping_name?: string;
+
+    }
+
     export interface StripeCheckoutProps {
-        token(token: Token)
+        token(token: Token, address?: Address)
         stripeKey: string
         label?: string
         name?: string
