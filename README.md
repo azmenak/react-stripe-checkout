@@ -109,6 +109,8 @@ This was probably terribly written, I'll look at any PR coming my way.
 ### Resources 
 
 * [Accept Stripe Payments with React and Express](https://www.robinwieruch.de/react-express-stripe-payment/)
+* [Open source web app to publish books and sell with Stripe](https://github.com/builderbook/builderbook)
+* [Open source web app to build your own SaaS product](https://github.com/async-labs/saas)
 
 ### Contributors
 - [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after instantiation and fixed a loading error
