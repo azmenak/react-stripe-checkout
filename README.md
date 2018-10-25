@@ -26,7 +26,7 @@ There used to be a separate `.styl` file and respective `.css` output. These hav
 everything else is optional as per the stripe docs. See [Checkout
 Docs](https://stripe.com/docs/checkout#integration-custom). All props
 go through simple validation and are passed to stripe checkout, they're
-also documented in `StripeCheckout.js`. See [Creating Charges](https://stripe.com/docs/charges) for saving stripe tokens using a server type of your choice.
+also documented in `StripeCheckout.js`. See [Creating Charges](https://stripe.com/docs/charges) for saving stripe tokens and creating charges, using a server of your choice.
 
 ```jsx
 import React from 'react'
