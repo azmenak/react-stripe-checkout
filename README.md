@@ -26,7 +26,7 @@ There used to be a separate `.styl` file and respective `.css` output. These hav
 everything else is optional as per the stripe docs. See [Checkout
 Docs](https://stripe.com/docs/checkout#integration-custom). All props
 go through simple validation and are passed to stripe checkout, they're
-also documented in `StripeCheckout.js`.
+also documented in `StripeCheckout.js`. See [Creating Charges](https://stripe.com/docs/charges) for saving stripe tokens using a server type of your choice.
 
 ```jsx
 import React from 'react'
@@ -109,6 +109,7 @@ This was probably terribly written, I'll look at any PR coming my way.
 ### Resources 
 
 * [Accept Stripe Payments with React and Express](https://www.robinwieruch.de/react-express-stripe-payment/)
+* [Creating Charges (setting up an API endpoint for saving tokens)](https://stripe.com/docs/charges)
 
 ### Contributors
 - [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after instantiation and fixed a loading error
