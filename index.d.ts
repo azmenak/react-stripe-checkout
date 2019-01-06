@@ -54,6 +54,8 @@ declare module "react-stripe-checkout" {
 
     export interface StripeCheckoutProps {
         token(token: Token, address?: Address)
+        opened?()
+        closed?()
         stripeKey: string
         label?: string
         name?: string
