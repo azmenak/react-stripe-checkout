@@ -9,6 +9,8 @@ const noop = () => {}
 const props = {
   stripeKey: 'foo',
   token: noop,
+  opened: noop,
+  closed: noop,
   name: 'foo',
   description: 'foo',
   image: 'foo',
