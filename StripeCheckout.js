@@ -128,16 +128,16 @@ export default class ReactStripeCheckout extends React.Component {
     currency: PropTypes.oneOf([
       'AED','AFN','ALL','AMD','ANG','AOA','ARS','AUD','AWG','AZN','BAM','BBD', // eslint-disable-line comma-spacing
       'BDT','BGN','BIF','BMD','BND','BOB','BRL','BSD','BWP','BZD','CAD','CDF', // eslint-disable-line comma-spacing
-      'CHF','CLP','CNY','COP','CRC','CVE','CZK','DJF','DKK','DOP','DZD','EEK', // eslint-disable-line comma-spacing
-      'EGP','ETB','EUR','FJD','FKP','GBP','GEL','GIP','GMD','GNF','GTQ','GYD', // eslint-disable-line comma-spacing
-      'HKD','HNL','HRK','HTG','HUF','IDR','ILS','INR','ISK','JMD','JPY','KES', // eslint-disable-line comma-spacing
-      'KGS','KHR','KMF','KRW','KYD','KZT','LAK','LBP','LKR','LRD','LSL','LTL', // eslint-disable-line comma-spacing
-      'LVL','MAD','MDL','MGA','MKD','MNT','MOP','MRO','MUR','MVR','MWK','MXN', // eslint-disable-line comma-spacing
-      'MYR','MZN','NAD','NGN','NIO','NOK','NPR','NZD','PAB','PEN','PGK','PHP', // eslint-disable-line comma-spacing
-      'PKR','PLN','PYG','QAR','RON','RSD','RUB','RWF','SAR','SBD','SCR','SEK', // eslint-disable-line comma-spacing
-      'SGD','SHP','SLL','SOS','SRD','STD','SVC','SZL','THB','TJS','TOP','TRY', // eslint-disable-line comma-spacing
-      'TTD','TWD','TZS','UAH','UGX','USD','UYU','UZS','VND','VUV','WST','XAF', // eslint-disable-line comma-spacing
-      'XCD','XOF','XPF','YER','ZAR','ZMW',                                     // eslint-disable-line comma-spacing
+      'CHF','CLP','CNY','COP','CRC','CVE','CZK','DJF','DKK','DOP','DZD','EGP', // eslint-disable-line comma-spacing
+      'ETB','EUR','FJD','FKP','GBP','GEL','GIP','GMD','GNF','GTQ','GYD','HKD', // eslint-disable-line comma-spacing
+      'HNL','HRK','HTG','HUF','IDR','ILS','INR','ISK','JMD','JPY','KES','KGS', // eslint-disable-line comma-spacing
+      'KHR','KMF','KRW','KYD','KZT','LAK','LBP','LKR','LRD','LSL','MAD','MDL', // eslint-disable-line comma-spacing
+      'MGA','MKD','MMK','MNT','MOP','MRO','MUR','MVR','MWK','MXN','MYR','MZN', // eslint-disable-line comma-spacing
+      'NAD','NGN','NIO','NOK','NPR','NZD','PAB','PEN','PGK','PHP','PKR','PLN', // eslint-disable-line comma-spacing
+      'PYG','QAR','RON','RSD','RUB','RWF','SAR','SBD','SCR','SEK','SGD','SHP', // eslint-disable-line comma-spacing
+      'SLL','SOS','SRD','STD','SVC','SZL','THB','TJS','TOP','TRY','TTD','TWD', // eslint-disable-line comma-spacing
+      'TZS','UAH','UGX','USD','UYU','UZS','VND','VUV','WST','XAF','XCD','XOF', // eslint-disable-line comma-spacing
+      'XPF','YER','ZAR','ZMW',                                                 // eslint-disable-line comma-spacing
     ]),
 
     // The label of the payment button in the Checkout form (e.g. “Subscribe”,
