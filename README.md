@@ -60,7 +60,7 @@ export default class TakeMoney extends React.Component {
 
 This will give you a default *Stripe-style* button which looks like this:
 
-![stripe checkout button](https://www.dropbox.com/s/tuwlslyrxubgc49/Screenshot%202016-08-05%2011.53.37.png?dl=1)
+![stripe checkout button](example.png)
 
 ### Send all the props!
 
