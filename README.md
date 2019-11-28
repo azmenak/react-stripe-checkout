@@ -109,7 +109,8 @@ This was probably terribly written, I'll look at any PR coming my way.
 
 ### Resources 
 
-* [Accept Stripe Payments with React and Express](https://www.robinwieruch.de/react-express-stripe-payment/)
+* Non SCA Compliant: [Client-side Stripe Checkout with React and Express](https://www.robinwieruch.de/react-express-stripe-payment/)
+* SCA Compliant: [Server-side Stripe Checkout with React and Express](https://github.com/rwieruch/react-express-stripe)
 
 ### Contributors
 - [@orhan-swe](https://github.com/orhan-swe) added updates to checkout after instantiation and fixed a loading error
