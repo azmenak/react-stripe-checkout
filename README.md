@@ -68,7 +68,7 @@ This will give you a default *Stripe-style* button which looks like this:
 <StripeCheckout
   name="Three Comma Co." // the pop-in header title
   description="Big Data Stuff" // the pop-in header subtitle
-  image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png" // the pop-in header image (default none)
+  image="https://stripe.com/img/documentation/checkout/marketplace.png" // the pop-in header image (default none)
   ComponentClass="div"
   label="Buy the Thing" // text inside the Stripe button
   panelLabel="Give Money" // prepended to the amount in the bottom pay button
