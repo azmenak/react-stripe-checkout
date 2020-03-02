@@ -84,4 +84,15 @@ describe('<ReactStripeCheckout />', () => {
     expect(openSpy).toHaveBeenCalled()
     expect(openSpy.calls[0].arguments[0].token).toEqual(props.token)
   })
+  it('should pass the `source` function to Stripe', () => {
+    const { token, ...propsWithoutToken } = props
+    const propsWithSource = {...props, source: noop}
+    const renderedComponent = shallow(
+      <ReactStripeCheckout {...propsWithSource} />
+    )
+    renderedComponent.instance().onScriptLoaded()
+    renderedComponent.instance().showStripeDialog()
+    expect(openSpy).toHaveBeenCalled()
+    expect(openSpy.calls[0].arguments[0].source).toEqual(propsWithSource.source)
+  })
 })

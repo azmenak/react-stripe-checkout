@@ -74,12 +74,17 @@ export default class ReactStripeCheckout extends React.Component {
     // can't use "key" as a prop in react, so have to change the keyname
     stripeKey: PropTypes.string.isRequired,
 
-    // The callback to invoke when the Checkout process is complete.
+    // The token callback to invoke when the Checkout process is complete.
+    // You have to provide either token or source callback, but never both.
     //   function(token)
-    //     token is the token object created.
-    //     token.id can be used to create a charge or customer.
-    //     token.email contains the email address entered by the user.
-    token: PropTypes.func.isRequired,
+    token: (props, ...args) =>
+      !props.source && PropTypes.func.isRequired(props, ...args),
+
+    // The source callback to invoke when the Checkout process is complete.
+    // You have to provide either token or source callback, but never both..
+    //   function(source)
+    source: (props, ...args) =>
+      !props.token && PropTypes.func.isRequired(props, ...args),
 
     // ==========================
     // Highly Recommended Options
@@ -301,6 +306,7 @@ export default class ReactStripeCheckout extends React.Component {
 
   getConfig = () => [
     'token',
+    'source',
     'image',
     'name',
     'description',
