@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 let scriptLoading = false;
 let scriptLoaded = false;
 let scriptDidError = false;
+const stripeHandlers = {};
 
 export default class ReactStripeCheckout extends React.Component {
   static defaultProps = {
@@ -11,7 +12,6 @@ export default class ReactStripeCheckout extends React.Component {
     label: 'Pay With Card',
     locale: 'auto',
     ComponentClass: 'span',
-    reconfigureOnUpdate: false,
     triggerEvent: 'onClick',
   }
 
@@ -56,13 +56,6 @@ export default class ReactStripeCheckout extends React.Component {
 
     // Runs when the script tag is created, but before it is added to the DOM
     onScriptTagCreated: PropTypes.func,
-
-    // By default, any time the React component is updated, it will call
-    // StripeCheckout.configure, which may result in additional XHR calls to the
-    // stripe API.  If you know the first configuration is all you need, you
-    // can set this to false.  Subsequent updates will affect the StripeCheckout.open
-    // (e.g. different prices)
-    reconfigureOnUpdate: PropTypes.bool,
 
     // =====================================================
     // Required by stripe
@@ -186,8 +179,6 @@ export default class ReactStripeCheckout extends React.Component {
     closed: PropTypes.func,
   }
 
-  static _isMounted = false;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -197,83 +188,75 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this.mounted = true;
     if (scriptLoaded) {
-      return this.updateStripeHandler();
-    }
+      this.getStripeHandler();
+    } else if (!scriptLoading) {
+      scriptLoading = true;
 
-    if (scriptLoading) {
-      return;
-    }
+      const script = document.createElement('script');
+      if (typeof this.props.onScriptTagCreated === 'function') {
+        this.props.onScriptTagCreated(script);
+      }
 
-    scriptLoading = true;
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.async = 1;
 
-    const script = document.createElement('script');
-    if (typeof this.props.onScriptTagCreated === 'function') {
-      this.props.onScriptTagCreated(script);
-    }
+      this.loadPromise = (() => {
+        let canceled = false;
+        const promise = new Promise((resolve, reject) => {
+          script.onload = () => {
+            scriptLoaded = true;
+            scriptLoading = false;
+            resolve();
+            this.onScriptLoaded();
+          };
+          script.onerror = (event) => {
+            scriptDidError = true;
+            scriptLoading = false;
+            reject(event);
+            this.onScriptError(event);
+          };
+        });
+        const wrappedPromise = new Promise((accept, cancel) => {
+          promise.then(() => canceled ? cancel({ isCanceled: true }) : accept()); // eslint-disable-line no-confusing-arrow
+          promise.catch(error => canceled ? cancel({ isCanceled: true }) : cancel(error)); // eslint-disable-line no-confusing-arrow
+        });
 
-    script.src = 'https://checkout.stripe.com/checkout.js';
-    script.async = 1;
-
-    this.loadPromise = (() => {
-      let canceled = false;
-      const promise = new Promise((resolve, reject) => {
-        script.onload = () => {
-          scriptLoaded = true;
-          scriptLoading = false;
-          resolve();
-          this.onScriptLoaded();
+        return {
+          promise: wrappedPromise,
+          cancel() { canceled = true; },
         };
-        script.onerror = (event) => {
-          scriptDidError = true;
-          scriptLoading = false;
-          reject(event);
-          this.onScriptError(event);
-        };
-      });
-      const wrappedPromise = new Promise((accept, cancel) => {
-        promise.then(() => canceled ? cancel({ isCanceled: true }) : accept()); // eslint-disable-line no-confusing-arrow
-        promise.catch(error => canceled ? cancel({ isCanceled: true }) : cancel(error)); // eslint-disable-line no-confusing-arrow
-      });
+      })();
 
-      return {
-        promise: wrappedPromise,
-        cancel() { canceled = true; },
-      };
-    })();
+      this.loadPromise.promise
+        .then(this.onScriptLoaded)
+        .catch(this.onScriptError);
 
-    this.loadPromise.promise
-      .then(this.onScriptLoaded)
-      .catch(this.onScriptError);
-
-    document.body.appendChild(script);
+      document.body.appendChild(script);
+    }
   }
 
-  componentDidUpdate() {
-    if (!scriptLoading) {
-      this.updateStripeHandler();
+  componentDidUpdate(prevProps) {
+    if (!scriptLoading && this.props.stripeKey !== prevProps.stripeKey) {
+      this.getStripeHandler();
     }
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.mounted = false;
     if (this.loadPromise) {
       this.loadPromise.cancel();
     }
-    if (ReactStripeCheckout.stripeHandler && this.state.open) {
-      ReactStripeCheckout.stripeHandler.close();
+    if (this.state.open && this.hasStripeHandler()) {
+      this.getStripeHandler().close();
     }
   }
 
   onScriptLoaded = () => {
-    if (!ReactStripeCheckout.stripeHandler) {
-      ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
-        key: this.props.stripeKey,
-      });
-      if (this.hasPendingClick) {
-        this.showStripeDialog();
-      }
+    this.getStripeHandler();
+    if (this.hasPendingClick) {
+      this.showStripeDialog();
     }
   }
 
@@ -285,8 +268,9 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   onClosed = (...args) => {
-    if (this._isMounted)
+    if (this.mounted) {
       this.setState({ open: false });
+    }
     if (this.props.closed) {
       this.props.closed.apply(this, args);
     }
@@ -323,12 +307,24 @@ export default class ReactStripeCheckout extends React.Component {
     closed: this.onClosed,
   });
 
-  updateStripeHandler() {
-    if (!ReactStripeCheckout.stripeHandler || this.props.reconfigureOnUpdate) {
-      ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
-        key: this.props.stripeKey,
-      });
+  getStripeHandler() {
+    const { stripeKey } = this.props;
+    if (!stripeKey || typeof StripeCheckout === 'undefined') return null;
+    let handler = stripeHandlers[stripeKey];
+    if (!handler) {
+      handler = StripeCheckout.configure({ key: stripeKey });
+      stripeHandlers[stripeKey] = handler;
     }
+    return handler;
+  }
+
+  hasStripeHandler() {
+    const { stripeKey } = this.props;
+    return (
+      stripeKey &&
+      typeof StripeCheckout !== 'undefined' &&
+      stripeHandlers.hasOwnProperty(stripeKey)
+    );
   }
 
   showLoadingDialog(...args) {
@@ -345,7 +341,7 @@ export default class ReactStripeCheckout extends React.Component {
 
   showStripeDialog() {
     this.hideLoadingDialog();
-    ReactStripeCheckout.stripeHandler.open(this.getConfig());
+    this.getStripeHandler().open(this.getConfig());
   }
 
   onClick = () => { // eslint-disable-line react/sort-comp
@@ -357,7 +353,7 @@ export default class ReactStripeCheckout extends React.Component {
       try {
         throw new Error('Tried to call onClick, but StripeCheckout failed to load');
       } catch (x) {} // eslint-disable-line no-empty
-    } else if (ReactStripeCheckout.stripeHandler) {
+    } else if (this.hasStripeHandler()) {
       this.showStripeDialog();
     } else {
       this.showLoadingDialog();
@@ -473,7 +469,7 @@ export default class ReactStripeCheckout extends React.Component {
     if (this.props.desktopShowModal === true && !this.state.open) {
       this.onClick();
     } else if (this.props.desktopShowModal === false && this.state.open) {
-      ReactStripeCheckout.stripeHandler.close();
+      this.getStripeHandler().close();
     }
 
     const { ComponentClass } = this.props;

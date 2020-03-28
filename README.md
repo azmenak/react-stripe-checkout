@@ -90,9 +90,6 @@ This will give you a default *Stripe-style* button which looks like this:
   token={this.onToken} // submit callback
   opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
   closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
-  // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
-  // you are using multiple stripe keys
-  reconfigureOnUpdate={false}
   // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
   // useful if you're using React-Tap-Event-Plugin
   triggerEvent="onTouchTap"
@@ -107,7 +104,7 @@ This will give you a default *Stripe-style* button which looks like this:
 ### Other info
 This was probably terribly written, I'll look at any PR coming my way.
 
-### Resources 
+### Resources
 
 * Non SCA Compliant: [Client-side Stripe Checkout with React and Express](https://www.robinwieruch.de/react-express-stripe-payment/)
 * SCA Compliant: [Server-side Stripe Checkout with React and Express](https://github.com/rwieruch/react-express-stripe)
