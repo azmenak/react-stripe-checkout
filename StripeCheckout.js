@@ -11,7 +11,6 @@ export default class ReactStripeCheckout extends React.Component {
     label: 'Pay With Card',
     locale: 'auto',
     ComponentClass: 'span',
-    reconfigureOnUpdate: false,
     triggerEvent: 'onClick',
   }
 
@@ -56,13 +55,6 @@ export default class ReactStripeCheckout extends React.Component {
 
     // Runs when the script tag is created, but before it is added to the DOM
     onScriptTagCreated: PropTypes.func,
-
-    // By default, any time the React component is updated, it will call
-    // StripeCheckout.configure, which may result in additional XHR calls to the
-    // stripe API.  If you know the first configuration is all you need, you
-    // can set this to false.  Subsequent updates will affect the StripeCheckout.open
-    // (e.g. different prices)
-    reconfigureOnUpdate: PropTypes.bool,
 
     // =====================================================
     // Required by stripe
@@ -250,8 +242,8 @@ export default class ReactStripeCheckout extends React.Component {
     document.body.appendChild(script);
   }
 
-  componentDidUpdate() {
-    if (!scriptLoading) {
+  componentDidUpdate(prevProps) {
+    if (!scriptLoading && this.props.stripeKey !== prevProps.stripeKey) {
       this.updateStripeHandler();
     }
   }
@@ -267,13 +259,11 @@ export default class ReactStripeCheckout extends React.Component {
   }
 
   onScriptLoaded = () => {
-    if (!ReactStripeCheckout.stripeHandler) {
-      ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
-        key: this.props.stripeKey,
-      });
-      if (this.hasPendingClick) {
-        this.showStripeDialog();
-      }
+    ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
+      key: this.props.stripeKey,
+    });
+    if (this.hasPendingClick) {
+      this.showStripeDialog();
     }
   }
 
@@ -324,11 +314,9 @@ export default class ReactStripeCheckout extends React.Component {
   });
 
   updateStripeHandler() {
-    if (!ReactStripeCheckout.stripeHandler || this.props.reconfigureOnUpdate) {
-      ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
-        key: this.props.stripeKey,
-      });
-    }
+    ReactStripeCheckout.stripeHandler = StripeCheckout.configure({
+      key: this.props.stripeKey,
+    });
   }
 
   showLoadingDialog(...args) {
