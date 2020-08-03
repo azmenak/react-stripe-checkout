@@ -73,6 +73,8 @@ declare module "react-stripe-checkout" {
         allowRememberMe?: boolean
         reconfigureOnUpdate?: boolean
         triggerEvent?: "onTouchTap" | "onClick" | "onTouchStart"
+        opened?: (this: StripeCheckoutProps, ...args: any[]) => void
+        closed?: (this: StripeCheckoutProps, ...args: any[]) => void
     }
 
     import React = require("react")
